@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Main{
+public class calculador_imc{
     public static void main(String[] arg) {
         Scanner teclado = new Scanner(System.in);
         System.out.println("Teu peso");
@@ -11,6 +11,8 @@ public class Main{
         System.out.println("Seu IMC eh de: ");
         System.out.print(imc);
         teclado.close();
+
+        //ta incompleto se n fico obvio.
         
     }
 }
