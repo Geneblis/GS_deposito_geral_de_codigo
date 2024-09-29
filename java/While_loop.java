@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Aula4 {
+public class While_loop {
     public static void main(String[] args) {
         int contador = 8;
         int numeroaleatorio1 = 3;

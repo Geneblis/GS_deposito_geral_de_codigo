@@ -1,0 +1,5 @@
+//public permite que o método seja acessado de qualquer lugar do programa.
+//static permite que o método seja chamado sem criar uma instância da classe.
+//void significa que o método não retorna nenhum valor.
+//main é o nome padrão para o ponto de entrada principal de um programa Java.
+//String[] args permite que o programa receba entrada do usuário.

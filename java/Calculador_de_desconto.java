@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Aula5 {
+public class Calculador_de_desconto {
     public static void main(String[] args) {
         int resposta = 2;
         while(resposta!=1){
