@@ -42,6 +42,8 @@ def eh_inteiro(valor):
     #verifica se um valor eh inteiro
     return isinstance(valor, int)
 
+
+
 ###########         Nota:
-#                       Essa foi de longe, a linguagem mais fulera que tive os desprazer de decorar.
+#                        Essa foi de longe, a linguagem mais fulera que tive os desprazer de decorar.
 #                                                                                                  -G
