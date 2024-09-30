@@ -67,6 +67,9 @@ class VetorOrdenado:
                 self.valores[i] = self.valores[i+1]
         self.ultima_posicao -= 1
 
+
+######################################################Codigo pos classe
+#Colocar input do usuario
 meuvetor = VetorOrdenado(5)
 meuvetor.inserir(10)
 meuvetor.inserir(20)
