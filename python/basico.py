@@ -16,6 +16,9 @@ print(z > y or x < 0)
 #For loops são usados para iterar sobre sequências.
 for fruta in frutas:
     print(fruta)
+for i in range(0,2):
+    for j in range(0,2):
+        print(i, j)
 
 #While loops são usados para executar blocos de código enquanto uma condição for verdadeira.
 while x < 5:
@@ -30,17 +33,26 @@ else:
     print("x é menor ou igual a 10")
 
 
+#Função com passagem de parâmetros e retorno
 def soma(x, y):
-    return x + y
+    return x + y #retorno
 print(soma(3, 5))  # Saída: 8
 
-def greet(nome):
+#Função com passagem de parâmetro, sem retorno
+def greet(nome): #nome eh parametro
     print("Olá, " + nome + "!")
 greet("João")  # Saída: Olá, João!
 
-def eh_inteiro(valor):
-    #verifica se um valor eh inteiro
-    return isinstance(valor, int)
+
+def energia_potencial(m, h, g=10):
+    return m*g*h
+valor = energia_potencial(10,10) #Colocou valores em m e h.
+print(valor)
+
+#range(start, stop, step)
+print(list(range(1,10,2)))
+print(list(range(10)))
+
 
 
 
