@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class conversor_real_dolar {
+public class Conversor_real_dolar {
     public static void main(String[] args) {
         System.out.println("Ola!");
         double dolar = 5.65;
