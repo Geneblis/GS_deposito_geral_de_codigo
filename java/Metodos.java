@@ -23,9 +23,9 @@ public class Methodos {
     }
     public static void main(String[] args){
         Scanner teclado = new Scanner(System.in); 
-        System.out.println("Insira o primeiro valor:");
+        System.out.print("Insira o primeiro valor:");
         double n3 = teclado.nextDouble();
-        System.out.println("Insira o segundo valor:");
+        System.out.print("Insira o segundo valor:");
         double n4 = teclado.nextDouble();
         double n1 = 348;
         double n2 = 2;
