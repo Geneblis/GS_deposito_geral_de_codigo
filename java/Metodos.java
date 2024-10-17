@@ -4,7 +4,7 @@ public class Methodos {
     //declaracao de metodo||function, vazio -> void
     static void imprime(){ 
         //comandos do metodo
-        System.out.println("Ola!");
+        System.out.println("Calculando...");
     }
     //Metodo com entrada
     static void soma(double a, double b){
