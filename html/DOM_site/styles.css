@@ -1,0 +1,12 @@
+#quadrado{
+    height: 500px;
+    width: 500px;
+    background-color: cyan
+}
+
+#butao{
+    margin-top: 30px;
+    padding: 30px;
+    border-radius: 30px;
+    cursor: pointer;
+}
