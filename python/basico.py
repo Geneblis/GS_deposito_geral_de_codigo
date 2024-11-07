@@ -50,6 +50,7 @@ valor = energia_potencial(10,10) #Colocou valores em m e h.
 print(valor)
 
 #range(start, stop, step)
+#for i in range() é um valor exclusivo. O ultimo digito não é printado ao ser atingindo. 
 print(list(range(1,10,2)))
 print(list(range(10)))
 

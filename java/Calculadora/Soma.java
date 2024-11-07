@@ -1,11 +1,11 @@
 package Calculadora;
 
 public class Soma{
-    ////atributos
+    //atributos
     int parcela1;
     int parcela2;
 
-    ////metodos
+    //metodos
     public void soma(){
         System.out.println(parcela1+parcela2);
     }
