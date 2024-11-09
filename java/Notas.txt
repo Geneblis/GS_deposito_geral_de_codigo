@@ -3,3 +3,20 @@
 //void significa que o método não retorna nenhum valor.
 //main é o nome padrão para o ponto de entrada principal de um programa Java.
 //String[] args permite que o programa receba entrada do usuário.
+
+
+
+//Wikipedia:
+public class OláMundo {
+   /**
+* Método que executa o programa
+* public = É visto em qualquer lugar da aplicação. É o modificador de acesso
+* static = é iniciado automaticamente pela JVM, sem precisar de uma instância
+* void = Método sem retorno (retorno vazio)
+* main = Nome do método, que é obrigatório ser este para que seja executado como o método principal da aplicação. A aplicação só pode ter um método denominado main. Recebe como parâmetro um array de String.
+* String[] args = Array de argumentos que podem ser repassados na chamada do programa.
+*/
+   public static void main(String[] args) {
+      System.out.println("Olá, Mundo!"); //Imprime na tela a frase
+   }
+}
