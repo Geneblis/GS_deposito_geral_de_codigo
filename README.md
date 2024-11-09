@@ -1,1 +1,1 @@
-imagina iago fazendo algo produtivo... Ai ai.
+Todo o código presente no repositório está licenciado sob a Mozilla Public License (MPL), o que permite sua exploração, uso e compartilhamento de forma livre. No entanto, é importante seguir os termos e princípios estabelecidos por essa licença, garantindo que quaisquer modificações ou redistribuições mantenham a mesma licença para o código original.
