@@ -1,3 +1,5 @@
+package POO_master_classes.Usuario;
+
 public class Usuario {
     public String nome;
     public int idade;

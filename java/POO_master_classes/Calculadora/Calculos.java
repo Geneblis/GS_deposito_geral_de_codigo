@@ -1,4 +1,4 @@
-package Calculadora;
+package POO_master_classes.Calculadora;
 
 public class Calculos {
 

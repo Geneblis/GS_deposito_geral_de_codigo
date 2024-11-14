@@ -1,3 +1,5 @@
+package POO_master_classes.Usuario;
+
 public class Main {
     public static void main (String args[]){
         Usuario usuario1 = new Usuario("x",22, false);
