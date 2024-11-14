@@ -6,7 +6,7 @@ public class Usuario {
     public boolean adulto;
 
 
-    //Construtor.
+    //Construtor. Em Java, um construtor é um método especial que tem o !!mesmo nome da classe!! e não tem um tipo de retorno.
     public Usuario(String nome, int idade , boolean adulto){
         this.nome = nome;
         this.idade = idade;
