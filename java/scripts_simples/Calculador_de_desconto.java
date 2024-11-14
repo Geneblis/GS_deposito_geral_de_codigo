@@ -31,8 +31,10 @@ public class Calculador_de_desconto {
                 System.out.println(valor);
             }
             System.out.print("Desja continuar? 1-parar, 2-continuar");
-            resposta = teclado.nextInt();
-            //teclado.close();
+            resposta = teclado.nextInt(); 
+            if(resposta == 1) {
+                teclado.close();
+            }
         }
     }
 }

@@ -14,6 +14,9 @@ public class While_loop {
             System.out.println("Coloque 0 para finalizar o programa.");
             Scanner teclado = new Scanner(System.in);
             contador = teclado.nextInt();
+            if(contador == 0) {
+                teclado.close();
+            }
         }
     }
 }
