@@ -90,7 +90,6 @@ public class Jogo_da_velha implements ActionListener {
             e.printStackTrace();
             System.err.println("Erro ao computar partida.");
         }
-
         if(random.nextInt(2)==0){ //Determina quem começa a partida.
             jogador1_turno=true;
             textfield.setText("Turno X");
