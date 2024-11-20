@@ -1,3 +1,5 @@
+package POO_master_classes.jogo_da_velha;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
@@ -15,7 +17,7 @@ public class Jogo_da_velha implements ActionListener {
     JButton[] buttons = new JButton[9];
     boolean jogador1_turno;
 
-    Jogo_da_velha(){
+    public Jogo_da_velha(){
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800,800);
         frame.getContentPane().setBackground(new Color(50,50,50));
@@ -254,6 +256,11 @@ public class Jogo_da_velha implements ActionListener {
             OVence(2, 4, 6);
         }
 
+    }
+
+    public void Jogo_da_velha() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'Jogo_da_velha'");
     }
 
 }
