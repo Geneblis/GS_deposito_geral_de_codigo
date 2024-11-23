@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.002.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "csharp", "csharp", "{14BA2E1E-3233-4700-8A24-385012B388EF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "csharp", "csharp\monogame\csharp.csproj", "{596CF5FB-FA9F-4AF4-ADC0-A7E98AEBC4C6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{596CF5FB-FA9F-4AF4-ADC0-A7E98AEBC4C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{596CF5FB-FA9F-4AF4-ADC0-A7E98AEBC4C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{596CF5FB-FA9F-4AF4-ADC0-A7E98AEBC4C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{596CF5FB-FA9F-4AF4-ADC0-A7E98AEBC4C6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{596CF5FB-FA9F-4AF4-ADC0-A7E98AEBC4C6} = {14BA2E1E-3233-4700-8A24-385012B388EF}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4C9562F3-DC6C-415F-A3BF-50C8A3A8EF8C}
+	EndGlobalSection
+EndGlobal
