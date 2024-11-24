@@ -255,12 +255,5 @@ public class Jogo_da_velha implements ActionListener {
         ){
             OVence(2, 4, 6);
         }
-
     }
-
-    public void Jogo_da_velha() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'Jogo_da_velha'");
-    }
-
 }
