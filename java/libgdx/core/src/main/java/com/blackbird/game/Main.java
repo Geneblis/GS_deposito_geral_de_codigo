@@ -23,7 +23,7 @@ public class Main extends ApplicationAdapter {
 
         //player settings
         player = new Player();
-        player.changeAngle(45);
+        player.changeAngle(30);
         player.definirPosicao(150, 100); //Posicao Inicial
         controles = new Controles(player, this); //vincular o player aos controles e vinular o main com this, "this" no codigo dos controles referente ao player.
     }
@@ -55,18 +55,10 @@ public class Main extends ApplicationAdapter {
         //finalizacao do render
     }
 
-
-
     public void atirar() {
-        //Boca do player
-        float offset = 15;
-        float posX = player.getX() + (float) Math.cos(Math.toRadians(player.getAngle())) * offset;
-        float posY = player.getY() + (float) Math.sin(Math.toRadians(player.getAngle())) * offset;
+        float offset = 15; // Distancia da boca da arma do player
         float angle = player.getAngle();
-
-        //debug pq esta porra eh bugada pra krl
-        System.out.println("Atirando: Posição (" + posX + ", " + posY + ") Ângulo: " + angle);
-        balas.add(new Bala(posX, posY, angle, 10, 5));
+        balas.add(Bala.atirar(player.getX(), player.getY(), angle, offset, 20, 10));
     }
 
     //todas as imagens para serem deletadas da RAM apos o uso.

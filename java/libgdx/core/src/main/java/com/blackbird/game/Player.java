@@ -28,7 +28,7 @@ public class Player {
         playerImageSpeed = new Texture("plane_speed.png");
         playerSprite = new Sprite(playerImage);
         position = new Vector2();
-        playerSprite.setOrigin(playerSprite.getWidth() / 2, playerSprite.getHeight() / 2); // Define a origem para o centro
+        playerSprite.setOrigin(playerSprite.getWidth() / 2, playerSprite.getHeight() / 2); //Dividir o tamamho por 2 coloca a origem para o centro.
     }
 
     public void changeAngle(float angle) {
