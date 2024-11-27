@@ -56,7 +56,7 @@ public class Main extends ApplicationAdapter {
     }
 
     public void atirar() {
-        float offset = 15; // Distancia da boca da arma do player
+        float offset = 5; // Distancia da boca da arma do player
         float angle = player.getAngle();
         balas.add(Bala.atirar(player.getX(), player.getY(), angle, offset, 20, 10));
     }
