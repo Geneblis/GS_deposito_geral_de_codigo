@@ -1,0 +1,14 @@
+/* 
+  #NULL - ID
+  .NULL - CLASSE
+*/
+
+.foto {
+  color: red;
+}
+
+.homepage_body {
+  background-image: url("./fotos/fundo1.gif");
+  background-size: cover; /* ajusta a imagem para cobrir toda a página */
+  background-repeat: no-repeat; /* impede que a imagem seja repetida */
+}

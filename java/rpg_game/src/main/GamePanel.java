@@ -60,10 +60,11 @@ public class GamePanel extends JPanel implements Runnable {
         //renderizador usando Delta, melhor performance.
         while (gameThread != null) {
             try {
+                //aleatorizador para criação de frames.
                 atualTempo = System.nanoTime();
-                delta += (atualTempo - sistemaTempo) / drawIntervalo;
+                delta += (atualTempo - sistemaTempo) / drawIntervalo; //tempo-delta convertido em NanoSegundos para Milisegundos dividido pelo fps (60)
                 timer += (atualTempo - sistemaTempo);
-                sistemaTempo = atualTempo;
+                sistemaTempo = atualTempo; //movendo tempo do sistema para uma outra variavel
             
                 if (delta >= 1) {
                     update();
