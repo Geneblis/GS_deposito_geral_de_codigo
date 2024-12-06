@@ -1,5 +1,3 @@
-package POO_master_classes.Calculadora;
-
 public class Calculos {
 
     public static void main (String[] args){

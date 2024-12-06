@@ -1,5 +1,3 @@
-package POO_master_classes.jogo_da_velha;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
@@ -255,5 +253,10 @@ public class Jogo_da_velha implements ActionListener {
         ){
             OVence(2, 4, 6);
         }
+    }
+
+    public static void main(String args[]){
+        @SuppressWarnings("unused")
+        Jogo_da_velha jogo = new Jogo_da_velha();
     }
 }

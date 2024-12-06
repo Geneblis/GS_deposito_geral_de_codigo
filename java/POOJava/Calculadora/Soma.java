@@ -1,5 +1,3 @@
-package POO_master_classes.Calculadora;
-
 public class Soma{
     //atributos
     int parcela1;

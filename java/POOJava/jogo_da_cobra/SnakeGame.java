@@ -1,5 +1,3 @@
-package POO_master_classes.jogo_da_cobra;
-
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -135,5 +133,10 @@ public class SnakeGame {
         
         System.out.println("Game Over!");
         teclado.close();
+    }
+
+    public static void main(String[] args) {
+        SnakeGame jogo = new SnakeGame();
+        jogo.Jogar();
     }
 }
