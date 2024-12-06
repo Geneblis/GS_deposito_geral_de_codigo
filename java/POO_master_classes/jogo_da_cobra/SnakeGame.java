@@ -17,7 +17,7 @@ public class SnakeGame {
     boolean gameOver;
     
     public SnakeGame() {
-        snake = new ArrayList<>();
+        snake = new ArrayList();
         snake.add(new int[]{ALTURA / 2, LARGURA / 2}); // posicao inicial da cobra, em um array.
         direction = 'R'; // Direção inicial
         spawnComida();
