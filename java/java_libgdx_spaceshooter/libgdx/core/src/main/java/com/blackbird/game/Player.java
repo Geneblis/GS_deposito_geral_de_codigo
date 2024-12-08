@@ -4,8 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
+@SuppressWarnings("unused")
 public class Player {
 
     private SpriteBatch batch;
@@ -16,9 +18,9 @@ public class Player {
     private Texture playerImageSpeed;
     private Sprite playerSprite;
 
-    //velocidade e aceleracao
-    private float max_speed =4f;
-    private float speed=1f;
+    // Velocidade e aceleração
+    private float max_speed = 4f;
+    private float speed = 1f;
     private float aceleracao = 0.2f;
     private float desaceleracao = 0.2f;
     public boolean speedUp = false;
@@ -28,24 +30,15 @@ public class Player {
         playerImageSpeed = new Texture("plane_speed.png");
         playerSprite = new Sprite(playerImage);
         position = new Vector2();
-        playerSprite.setOrigin(playerSprite.getWidth() / 2, playerSprite.getHeight() / 2); //Dividir o tamamho por 2 coloca a origem para o centro.
-    }
-
-    public void changeAngle(float angle) {
-        if (angle < 0) {
-            angle = 359;
-        } else if (angle > 359) {
-            angle = 0;
-        }
-        this.angle = angle;
+        playerSprite.setOrigin(playerSprite.getWidth() / 2, playerSprite.getHeight() / 2); // Dividir o tamanho por 2 coloca a origem para o centro.
     }
 
     public void setAngle(float angle) {
         this.angle = angle;
     }
 
-    public void checkSpeed(){
-        if(speedUp == false){
+    public void checkSpeed() {
+        if (speedUp == false) {
             playerSprite.setTexture(playerImage);
         } else {
             playerSprite.setTexture(playerImageSpeed);
@@ -80,23 +73,29 @@ public class Player {
     }
 
     public void accelerate() {
-        if (speed < max_speed) { //velocidade atual tem q ser menor que a maxima.
+        if (speed < max_speed) { // Velocidade atual tem que ser menor que a máxima.
             speed += aceleracao;
             if (speed > max_speed) {
                 speed = max_speed;
             }
         }
     }
+
     public void decelerate() {
         if (speed > 0) {
             speed -= desaceleracao;
             if (speed < 0) {
                 speed = 0;
-                speedUp=false;
+                speedUp = false;
                 checkSpeed();
-                //caso estiver parado, checar sprite.
+                // Caso estiver parado, checar sprite.
             }
         }
+    }
+
+    public Rectangle getBounds() {
+        // Retorna um retângulo que representa a área ocupada pelo jogador
+        return new Rectangle(position.x - PLAYER_SIZE / 2, position.y - PLAYER_SIZE / 2, PLAYER_SIZE, PLAYER_SIZE);
     }
 
     public void dispose() {
