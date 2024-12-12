@@ -2,6 +2,7 @@ package com.blackbird.game;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -21,9 +22,12 @@ public class Main extends ApplicationAdapter {
     private int score; // Variável para armazenar a pontuação do jogador
     private boolean gameOver; // Flag para verificar se o jogo acabou
     private BitmapFont font; // Fonte para exibir "Game Over"
+    private Random aleatorizador;
+    private int posicaoinimiga;
 
     @Override
     public void create() {
+        aleatorizador = new Random();
         batch = new SpriteBatch();
         balas = new ArrayList<>();
         enemies = new ArrayList<>();
@@ -41,6 +45,14 @@ public class Main extends ApplicationAdapter {
         player.definirPosicao(550, 384);
         controles = new Controles(player, this);
     }
+
+    private void aleatorizadorDePosicao() {
+        // Gera uma posição aleatória dentro dos limites da tela
+        float x = aleatorizador.nextInt(Gdx.graphics.getWidth() - 50);
+        float y = aleatorizador.nextInt(Gdx.graphics.getHeight() - 50);
+        spawnEnemies(1, x, y);
+    }
+
 
     @Override
     public void render() {
@@ -81,15 +93,13 @@ public class Main extends ApplicationAdapter {
                 // Verifica colisão com balas
                 for (int j = 0; j < balas.size(); j++) {
                     if (enemy.checkCollision(balas.get(j))) {
-                        enemy.hit(this); // Passa a referência da classe Main
+                        enemy.hit(this);
                         balas.remove(j);
                         j--;
-                        // Spawnar novos inimigos
-                        spawnEnemies(2, 50, 0);
-                        break; // Para evitar múltiplas colisões
+                        aleatorizadorDePosicao();
+                        break;
                     }
                 }
-
                 // Verifica colisão com o jogador
                 if (enemy.checkPlayerCollision(player)) {
                     gameOver = true; // Define a flag de Game Over

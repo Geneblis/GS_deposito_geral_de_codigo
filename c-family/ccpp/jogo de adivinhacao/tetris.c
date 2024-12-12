@@ -93,8 +93,7 @@ int verificarColisao(int tela[TAMANHO_TELA][TAMANHO_TELA], Piece *piece) {
     for (i = 0; i < TAMANHO_PIECE; i++) {
         for (j = 0; j < TAMANHO_PIECE; j++) {
             if (piece->forma[i][j] == 1) {
-                if (piece->x + j < 1 || piece->x + j > TAMANHO_TELA - 2 || piece->y + i < 1 || piece->y + i > TAM ```c
-> TAMANHO_TELA - 2) {
+                if (piece->x + j < 1 || piece->x + j > TAMANHO_TELA - 2 || piece->y + i < 1 || piece->y + i > TAMANHO_TELA - 2) {
                     return 1;
                 }
                 if (tela[piece->y + i][piece->x + j] == 1) {

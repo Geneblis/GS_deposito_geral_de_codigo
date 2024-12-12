@@ -12,7 +12,7 @@ public class Enemy {
     private final Texture enemyTexture;
     private final Sprite enemySprite;
     private boolean isAlive;
-    private final float speed = 2.0f; // Velocidade do inimigo
+    private final float speed = 2.5f; // Velocidade do inimigo
     private Main main; // Referência à classe Main
 
     public Enemy(float x, float y, Main main) {

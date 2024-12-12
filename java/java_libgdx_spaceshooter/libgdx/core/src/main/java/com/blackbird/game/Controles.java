@@ -26,10 +26,10 @@ public class Controles {
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            player.setAngle(player.getAngle() + 1.5f);
+            player.setAngle(player.getAngle() + 2.0f);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            player.setAngle(player.getAngle() - 1.5f);
+            player.setAngle(player.getAngle() - 2.0f);
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
