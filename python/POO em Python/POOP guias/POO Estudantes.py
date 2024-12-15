@@ -1,3 +1,4 @@
+# Self equivale this em outras linguagens
 class Estudantes:
     classe_ano = 2024
     num_estudantes = 0

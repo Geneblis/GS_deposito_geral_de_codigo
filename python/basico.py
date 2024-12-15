@@ -54,9 +54,9 @@ print(valor)
 print(list(range(1,10,2)))
 print(list(range(10)))
 
+def kagadas(idk):
+    idk = None
+    idk = str(input("Coloque um valor para idk \n"))
+    print(idk)
 
-
-
-###########         Nota:
-#                        Essa foi de longe, a linguagem mais fulera que tive os desprazer de decorar.
-#                                                                                                  -G
+kagadas("sla")

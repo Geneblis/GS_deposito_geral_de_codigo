@@ -1,5 +1,6 @@
 
 #Self, refere-se à instância da classe atual, ou seja, um valor dela mesma.
+# Self equivale this em outras linguagens
 #  EX:
 #   car1.modelo = "Mustang"
 #   car1.ano = "1967"

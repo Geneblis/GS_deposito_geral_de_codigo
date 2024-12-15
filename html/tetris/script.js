@@ -1,13 +1,13 @@
+// Constantes
 const canvas = document.getElementById('board');
 const contexto = canvas.getContext('2d');
-
-const LINHAS = 20;
-const COLUNAS = 12; // Ajustado para 12 colunas
+const NUM_LINHAS = 20;
+const NUM_COLUNAS = 12;
 const TAMANHO_BLOCO = 20;
+const VELOCIDADE_QUEDA = 1000;
+const CORES = { BLOCO: 'cyan', BORDA: 'black' };
 
-let tabuleiro = Array.from({ length: LINHAS }, () => Array(COLUNAS).fill(0));
-let pontuacao = 0;
-
+// Tetrôminos
 const TETROMINOS = [
     [[1, 1, 1, 1]], // I
     [[1, 1], [1, 1]], // O
@@ -18,133 +18,151 @@ const TETROMINOS = [
     [[0, 0, 1], [1, 1, 1]]  // J
 ];
 
-let pecaAtual;
-let pecaPosicao;
-
-function obterPecaAleatoria() {
-    const indiceAleatorio = Math.floor(Math.random() * TETROMINOS.length);
-    return TETROMINOS[indiceAleatorio];
+// Funções Auxiliares
+function desenharBloco(x, y, cor) {
+    contexto.fillStyle = cor;
+    contexto.fillRect(x * TAMANHO_BLOCO, y * TAMANHO_BLOCO, TAMANHO_BLOCO, TAMANHO_BLOCO);
+    contexto.strokeStyle = CORES.BORDA;
+    contexto.strokeRect(x * TAMANHO_BLOCO, y * TAMANHO_BLOCO, TAMANHO_BLOCO, TAMANHO_BLOCO);
 }
 
-function desenharTabuleiro() {
-    contexto.clearRect(0, 0, canvas.width, canvas.height);
-    for (let r = 0; r < LINHAS; r++) {
-        for (let c = 0; c < COLUNAS; c++) {
-            if (tabuleiro[r][c]) {
-                contexto.fillStyle = 'cyan';
-                contexto.fillRect(c * TAMANHO_BLOCO, r * TAMANHO_BLOCO, TAMANHO_BLOCO, TAMANHO_BLOCO);
-                contexto.strokeStyle = 'black';
-                contexto.strokeRect(c * TAMANHO_BLOCO, r * TAMANHO_BLOCO, TAMANHO_BLOCO, TAMANHO_BLOCO);
-            }
-        }
+function inicializarTabuleiro() {
+    return Array.from({ length: NUM_LINHAS }, () => Array(NUM_COLUNAS).fill(0));
+}
+
+// Classe Principal
+class Tetris {
+    constructor() {
+        this.tabuleiro = inicializarTabuleiro();
+        this.pecaAtual = this.obterPecaAleatoria();
+        this.posicaoAtual = { x: 3, y: 0 };
+        this.pontuacao = 0;
     }
-}
 
-function desenharPeca(peca, posicao) {
-    peca.forEach((linha, r) => {
-        linha.forEach((valor, c) => {
-            if (valor) {
-                contexto.fillStyle = 'cyan';
-                contexto.fillRect((posicao.x + c) * TAMANHO_BLOCO, (posicao.y + r) * TAMANHO_BLOCO, TAMANHO_BLOCO, TAMANHO_BLOCO);
-                contexto.strokeStyle = 'black';
-                contexto.strokeRect((posicao.x + c) * TAMANHO_BLOCO, (posicao.y + r) * TAMANHO_BLOCO, TAMANHO_BLOCO, TAMANHO_BLOCO);
-            }
-        });
-    });
-}
+    obterPecaAleatoria() {
+        const indiceAleatorio = Math.floor(Math.random() * TETROMINOS.length);
+        return TETROMINOS[indiceAleatorio];
+    }
 
-function podeMover(peca, posicao) {
-    for (let r = 0; r < peca.length; r++) {
-        for (let c = 0; c < peca[r].length; c++) {
-            if (peca[r][c]) {
-                const novaX = posicao.x + c;
-                const novaY = posicao.y + r;
-                if (novaX < 0 || novaX >= COLUNAS || novaY >= LINHAS || (novaY >= 0 && tabuleiro[novaY][novaX])) {
-                    return false;
+    podeMover(peca, posicao) {
+        for (let r = 0; r < peca.length; r++) {
+            for (let c = 0; c < peca[r].length; c++) {
+                if (peca[r][c]) {
+                    const novaX = posicao.x + c;
+                    const novaY = posicao.y + r;
+
+                    //nao deixa mover a peca caso para fora da area do jogo.
+                    if (novaX < 0 || novaX >= NUM_COLUNAS || novaY >= NUM_LINHAS || (novaY >= 0 && this.tabuleiro[novaY][novaX])) {
+                        return false;
+                    }
                 }
             }
         }
+        return true;
     }
-    return true;
-}
 
-function mesclarPeca(peca, posicao) {
-    peca.forEach((linha, r) => {
-        linha.forEach((valor, c) => {
-            if (valor) {
-                tabuleiro[posicao.y + r][posicao.x + c] = 1;
-            }
+    mesclarPeca(peca, posicao) {
+        peca.forEach((linha, r) => {
+            linha.forEach((valor, c) => {
+                if (valor) {
+                    this.tabuleiro[posicao.y + r][posicao.x + c] = 1;
+                }
+            });
         });
-    });
-}
+    }
 
-function limparLinhas() {
-    let linhasLimpa = 0;
-    for (let r = LINHAS - 1; r >= 0; r--) {
-        if (tabuleiro[r].every(valor => valor === 1)) {
-            tabuleiro.splice(r, 1);
-            tabuleiro.unshift(Array(COLUNAS).fill(0));
-            linhasLimpa++;
+    limparLinhas() {
+        let linhasLimpa = 0;
+        for (let r = NUM_LINHAS - 1; r >= 0; r--) {
+            if (this.tabuleiro[r].every(valor => valor === 1)) {
+                this.tabuleiro.splice(r, 1);
+                this.tabuleiro.unshift(Array(NUM_COLUNAS).fill(0));
+                linhasLimpa++;
+            }
         }
+        this.pontuacao += linhasLimpa * 100;
+        document.getElementById('pontuacao').innerText = `Pontuação: ${this.pontuacao}`;
     }
-    pontuacao += linhasLimpa * 100; // Aumenta a pontuação
-    document.getElementById('pontuacao').innerText = `Pontuação: ${pontuacao}`; // Atualiza a pontuação na tela
-}
 
-function cairPeca() {
-    if (podeMover(pecaAtual, { x: pecaPosicao.x, y: pecaPosicao.y + 1 })) {
-        pecaPosicao.y++;
-    } else {
-        mesclarPeca(pecaAtual, pecaPosicao);
-        limparLinhas(); // Limpa linhas completas
-        pecaAtual = obterPecaAleatoria();
-        pecaPosicao = { x: 3, y: 0 }; // Reinicia a posição da peça
+    cairPeca() {
+        if (this.podeMover(this.pecaAtual, { x: this.posicaoAtual.x, y: this.posicaoAtual.y + 1 })) {
+            this.posicaoAtual.y++;
+        } else {
+            this.mesclarPeca(this.pecaAtual, this.posicaoAtual);
+            this.limparLinhas();
+            this.pecaAtual = this.obterPecaAleatoria();
+            this.posicaoAtual = { x: 3, y: 0 };
 
-        // Verifica se o jogo acabou
-        if (!podeMover(pecaAtual, pecaPosicao)) {
-            alert("Fim de jogo! Sua pontuação final foi de: " + pontuacao);
-            document.location.reload(); // Reinicia o jogo
+            if (!this.podeMover(this.pecaAtual, this.posicaoAtual)) {
+                alert("Fim de jogo! Sua pontuacao final foi de: " + this.pontuacao);
+                document.location.reload();
+            }
         }
+        this.atualizarTela();
     }
-    desenharTabuleiro();
-    desenharPeca(pecaAtual, pecaPosicao);
+
+    moverPeca(direcao) {
+        const novaPosicao = { x: this.posicaoAtual.x + direcao, y: this.posicaoAtual.y };
+        if (this.podeMover(this.pecaAtual, novaPosicao)) {
+            this.posicaoAtual = novaPosicao;
+        }
+        this.atualizarTela();
+    }
+
+    girarPeca() {
+        const pecaGirada = this.pecaAtual[0].map((_, index) => this.pecaAtual.map(linha => linha[index]).reverse());
+        if (this.podeMover(pecaGirada, this.posicaoAtual)) {
+            this.pecaAtual = pecaGirada;
+        }
+        this.atualizarTela();
+    }
+
+    atualizarTela() {
+        contexto.clearRect(0, 0, canvas.width, canvas.height);
+        this.tabuleiro.forEach((linha, r) => {
+            linha.forEach((valor, c) => {
+                if (valor) {
+                    desenharBloco(c, r, CORES.BLOCO);
+                }
+            });
+        });
+        this.desenharPeca(this.pecaAtual, this.posicaoAtual);
+    }
+
+    desenharPeca(peca, posicao) {
+        peca.forEach((linha, r) => {
+            linha.forEach((valor, c) => {
+                if (valor) {
+                    desenharBloco(posicao.x + c, posicao.y + r, CORES.BLOCO);
+                }
+            });
+        });
+    }
+
+    iniciar() {
+        setInterval(() => this.cairPeca(), VELOCIDADE_QUEDA);
+        this.atualizarTela();
+    }
 }
 
-function moverPeca(direcao) {
-    const novaPosicao = { x: pecaPosicao.x + direcao, y: pecaPosicao.y };
-    if (podeMover(pecaAtual, novaPosicao)) {
-        pecaPosicao = novaPosicao;
-    }
-    desenharTabuleiro();
-    desenharPeca(pecaAtual, pecaPosicao);
-}
+// Inicialização
+const jogo = new Tetris();
+jogo.iniciar();
 
-function girarPeca() {
-    const pecaGirada = pecaAtual[0].map((_, index) => pecaAtual.map(linha => linha[index]).reverse());
-    if (podeMover(pecaGirada, pecaPosicao)) {
-        pecaAtual = pecaGirada;
-    }
-    desenharTabuleiro();
-    desenharPeca(pecaAtual, pecaPosicao);
-}
-
+// Adiciona um listener para as teclas pressionadas
 document.addEventListener('keydown', (event) => {
     if (event.key === 'ArrowLeft') {
-        moverPeca(-1);
+        jogo.moverPeca(-1);
     } else if (event.key === 'ArrowRight') {
-        moverPeca(1);
+        jogo.moverPeca(1);
     } else if (event.key === 'ArrowDown') {
-        cairPeca();
-    } else if (event.key === ' ') { // Adiciona a rotação ao pressionar a barra de espaço
-        girarPeca();
+        jogo.cairPeca();
+    } else if (event.key === ' ') {
+        jogo.girarPeca();
     }
 });
 
-// Inicializa o jogo
-pecaAtual = obterPecaAleatoria();
-pecaPosicao = { x: 3, y: 0 };
-setInterval(cairPeca, 1000);
-
+// Função de boas-vindas
 function ola() {
     alert("Boa sorte!");
 }
