@@ -19,3 +19,16 @@ console.log("Resultado da subtração:", resultadoSubtracao);
 let num1 = 5;
 console.log(num1);
 console.log(5 != `5`)
+
+function multiplicarArray(arr) {
+    let produto = 1;
+    for (let i = 0; i < arr.length; i++) {
+        for (let j = 0; j < arr[i].length; j++) {
+            produto *= arr[i][j];
+        }
+    }
+    return produto;
+}
+
+var produto = multiplicarArray([[1, 5], [4, 6, 7], [33, 6, 9]]);
+console.log(produto);
