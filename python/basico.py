@@ -74,7 +74,7 @@ Se você não usasse self, o Python acharia que a variável é apenas local dent
 class Basico:
     def __init__(self):
         pass  
-    def _naoSei(sla):
+    def _naoSei(self, sla):
         print(sla)
 
 basicly = Basico()

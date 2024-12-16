@@ -2,14 +2,24 @@ from tkinter import *
 
 class Calculadora(Frame):
     def __init__(self):
-        super().__init__()  # Inicializa a classe pai Frame
+        # Inicializa a classe pai Frame antes da calculadora.
+        super().__init__() 
         
         # Configuração da janela principal
         self.master.title("Calculadora")
         self.pack(expand=YES, fill=BOTH)
+        #expand=YES: Faz com que o widget "cresça" para ocupar o espaço extra disponível.
+        #fill=BOTH: Faz com que o widget ocupe todo o espaço disponível na largura e altura.
         
         # Variável que controla o visor da calculadora
         self.display_var = StringVar()
+
+        """    
+        Aqui, self.display_var é um atributo da instância da classe Calculadora.
+        Você usa self para garantir que ele seja acessível em qualquer outro método da classe.
+        Se você não usasse self, o Python acharia que a variável é apenas local dentro do método e não poderia ser acessada em outros métodos.
+        """
+
         # Visor da calculadora (caixa de texto)
         Entry(self, textvariable=self.display_var, font="Arial 20 bold", justify='right', bd=20, bg="powder blue").pack(
             side=TOP, expand=YES, fill=BOTH
