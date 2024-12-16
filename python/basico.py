@@ -25,6 +25,11 @@ while x < 5:
     print(x) #Se print antes da soma, o resultado no terminal será o ultimo digito antes da funcao ter retornado falsa/concluida.
     x += 1
 
+calculo_elevado_a = 3 ** 4 #3 elevado a 4
+print(calculo_elevado_a)
+resto_de_calculo = 3 % 4 #3 / 4 = x, x resultado eh o resto da operacao.
+print(resto_de_calculo)
+
 if x == 5:
     print(x, "é igual a cinco.")
 elif x > 10:
