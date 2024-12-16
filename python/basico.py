@@ -65,3 +65,17 @@ def kagadas(idk):
     print(idk)
 
 kagadas("sla")
+
+"""    
+Aqui, self é um atributo da instância da classe.
+Você usa self para garantir que ele seja acessível em qualquer outro método da classe.
+Se você não usasse self, o Python acharia que a variável é apenas local dentro do método e não poderia ser acessada em outros métodos.
+"""
+class Basico:
+    def __init__(self):
+        pass  
+    def _naoSei(sla):
+        print(sla)
+
+basicly = Basico()
+basicly._naoSei("ops!")
