@@ -1,13 +1,15 @@
 function adicionarBotoesFechar() {
     document.querySelectorAll("li").forEach((item) => {
         if (!item.querySelector(".fechar")) {
-            const span = document.createElement("span");
-            span.className = "fechar";
-            span.textContent = "\u00D7";
-            span.onclick = function () {
-                this.parentElement.style.display = "none";
+            const apagar = document.createElement("apagar");
+            apagar.className = "fechar";
+            apagar.textContent = " \u2613";
+            apagar.onclick = function () {
+                if (confirm("Você realmente deseja remover este item?")) {
+                    item.remove();
+                }
             };
-            item.appendChild(span);
+            item.appendChild(apagar);
         }
     });
 }
@@ -28,9 +30,7 @@ function adicionarNovoElemento() {
     const li = document.createElement("li");
     li.textContent = inputValor;
     document.getElementById("meusAfazeres").appendChild(li);
-
     document.getElementById("afazeres").value = ""; // Limpa o input
-
     adicionarBotoesFechar();
 }
 adicionarBotoesFechar();
