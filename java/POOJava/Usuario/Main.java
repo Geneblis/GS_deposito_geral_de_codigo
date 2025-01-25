@@ -1,4 +1,4 @@
-package POO_master_classes.Usuario;
+package POOJava.Usuario;
 
 public class Main {
     public static void main (String args[]){
@@ -8,5 +8,12 @@ public class Main {
         Usuario usuario2 = new Usuario("Maria",2, false);
         usuario1.imprimirdados();
         usuario2.imprimirdados();
+
+        Administrador admin = new Administrador();
+        admin.definir_nome("Carlos");
+        Usuario usuarioAdmin = admin.getUsuario();
+        if (usuarioAdmin != null) {
+            usuarioAdmin.imprimirdados();
+        }
     }
 }

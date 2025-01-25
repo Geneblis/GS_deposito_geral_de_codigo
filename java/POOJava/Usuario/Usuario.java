@@ -1,4 +1,4 @@
-package POO_master_classes.Usuario;
+package POOJava.Usuario;
 
 public class Usuario {
     public String nome;
