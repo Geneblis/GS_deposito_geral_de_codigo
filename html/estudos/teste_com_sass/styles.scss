@@ -1,0 +1,23 @@
+$primaria: blue;
+$secondaria: purple;
+
+
+header{
+    display:flex;
+    background: $primaria;
+    color: aquamarine;
+    h1{
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        font-size: 30px;
+    }
+    p{
+        color: red;
+    }
+}
+#louco{
+    #butao_do_louco{
+        &:hover{
+            background: $secondaria;
+        }   
+    }
+}

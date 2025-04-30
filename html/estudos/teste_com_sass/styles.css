@@ -1,0 +1,16 @@
+header {
+  display: flex;
+  background: blue;
+  color: aquamarine;
+}
+header h1 {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 30px;
+}
+header p {
+  color: red;
+}
+
+#louco #butao_do_louco:hover {
+  background: purple;
+}/*# sourceMappingURL=styles.css.map */
