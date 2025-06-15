@@ -1,0 +1,22 @@
+name: "test"
+instances {
+  id: "enemy"
+  prototype: "/main/enemy.go"
+  children: "enemy_factory"
+  scale3 {
+    x: 0.25
+    y: 0.25
+    z: 0.25
+  }
+}
+scale_along_z: 0
+embedded_instances {
+  id: "enemy_factory"
+  data: "embedded_components {\n"
+  "  id: \"factory\"\n"
+  "  type: \"factory\"\n"
+  "  data: \"prototype: \\\"/main/enemy.go\\\"\\n"
+  "\"\n"
+  "}\n"
+  ""
+}

@@ -1,0 +1,10 @@
+function on_message(self, message_id, message, sender)
+	if message_id == hash("trigger_response") and message.enter then
+		-- captura posição
+		local pos = go.get_position()
+
+		--delay esta no spawner/factory.
+		msg.post("/enemy_spawner#enemy_factory", hash("respawn"), { position = pos })
+		go.delete()
+	end
+end

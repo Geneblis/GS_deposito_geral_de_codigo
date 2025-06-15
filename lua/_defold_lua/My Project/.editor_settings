@@ -1,0 +1,95 @@
+{
+  :bundle {
+    :last-bundle-command :bundle-windows
+    :output-directory "C:\\Users\\byelo\\Downloads\\Defold-x86_64-win32\\projects\\My Project\\bundles"
+    :windows {
+      :build_report false
+      :contentless false
+      :liveupdate false
+      :platform "x86_64-win32"
+      :texture_compression "enabled"
+      :variant "debug"
+      :with_symbols true
+    }
+  }
+  :workflow {
+    :recent-files [
+      [
+        "/README.md"
+        :html
+      ]
+      [
+        "/game.project"
+        :cljfx-form-view
+      ]
+      [
+        "/main/player.script"
+        :code
+      ]
+      [
+        "/input/game.input_binding"
+        :cljfx-form-view
+      ]
+      [
+        "/builtins/graphics/particle_blob.tilesource"
+        :scene
+      ]
+      [
+        "/main/enemy_.tilesource"
+        :scene
+      ]
+      [
+        "/assets/ewnemy.atlas"
+        :scene
+      ]
+      [
+        "/scripts/enemy"
+        :code
+      ]
+      [
+        "/scripts/enemi.script"
+        :code
+      ]
+      [
+        "/assets/game.atlas"
+        :scene
+      ]
+      [
+        "/main/bullet.go"
+        :scene
+      ]
+      [
+        "/scripts/bullet.script"
+        :code
+      ]
+      [
+        "/main/test.collection"
+        :scene
+      ]
+      [
+        "/main/enemy.collection"
+        :scene
+      ]
+      [
+        "/scripts/player.script"
+        :code
+      ]
+      [
+        "/main/enemy.go"
+        :scene
+      ]
+      [
+        "/scripts/enemy_factory.script"
+        :code
+      ]
+      [
+        "/scripts/enemy.script"
+        :code
+      ]
+      [
+        "/main/main.collection"
+        :scene
+      ]
+    ]
+  }
+}

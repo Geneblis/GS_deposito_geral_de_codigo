@@ -1,0 +1,34 @@
+-- player_move.script
+
+-- Chamado uma única vez, quando o componente é inicializado.
+function init(self)
+	-- Solicita que este script receba eventos de input
+	msg.post(".", "acquire_input_focus")
+
+	timer.delay(1, true, function()
+		factory.create("#factory")
+	end)
+end
+
+-- Chamado sempre que há um evento de input (teclado, joystick, mouse etc.)
+function on_input(self, action_id, action)
+	if action_id == hash("left") then
+		-- Obtém a posição atual do Game Object
+		local pos = go.get_position()
+
+		-- Move 10 unidades para a esquerda
+		pos.x = pos.x - 10
+
+		-- Atualiza a posição do Game Object
+		go.set_position(pos)
+	elseif action_id == hash("right") then
+
+		-- Obtém a posição atual do Game Object
+		local pos = go.get_position()
+		-- Move 10 unidades para a direita
+		pos.x = pos.x + 10
+
+		-- Atualiza a posição do Game Object
+		go.set_position(pos)
+	end
+end

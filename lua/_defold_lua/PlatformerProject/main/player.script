@@ -1,0 +1,81 @@
+local GRAVITY    = -900     -- aceleração da gravidade (pixels/s²)
+local SPEED      = 200      -- velocidade horizontal (pixels/s)
+local JUMP_FORCE = 450      -- impulso de pulo (pixels/s)
+
+local IDLE_SPRITE = "#idle_sprite"
+local RUN_SPRITE  = "#run_sprite"
+
+-- estado atual da animação
+local function check_state(stance)
+	if stance == "run" then 
+		msg.post(IDLE_SPRITE, "disable")
+		msg.post(RUN_SPRITE,  "enable")
+		sprite.play_flipbook(RUN_SPRITE, "run")
+	else
+		msg.post(RUN_SPRITE,  "disable")
+		msg.post(IDLE_SPRITE, "enable")
+		sprite.play_flipbook(IDLE_SPRITE, "idle")
+	end
+end
+
+function init(self)
+	msg.post(".", "acquire_input_focus")
+	self.velocity     = vmath.vector3(0,0,0)
+	self.is_grounded  = false
+	self.direction    = 0
+	check_state("idle")
+end
+
+function on_input(self, action_id, action)
+	if action_id == hash("right") or action_id == hash("left") then
+		local dir = (action_id == hash("right")) and 1 or -1
+		if action.pressed then
+			self.direction   = dir
+			self.velocity.x  = dir * SPEED
+			check_state("run")
+			sprite.set_hflip(RUN_SPRITE, dir < 0)
+		elseif action.released then
+			self.direction   = 0
+			self.velocity.x  = 0
+			check_state("idle")
+			sprite.set_hflip(IDLE_SPRITE, dir < 0)
+		end
+	elseif action_id == hash("jump") and action.pressed then
+		if self.is_grounded then
+			self.velocity.y = JUMP_FORCE
+			self.is_grounded = false
+		end
+	end
+end
+
+function fixed_update(self, dt)
+	self.is_grounded = false --meio dirty mas é oq é.
+	print(self.velocity.y)
+	-- aplica gravidade apenas se não estiver no chão
+	if not self.is_grounded then
+		self.velocity.y = self.velocity.y + GRAVITY * dt
+	end
+
+	-- atualiza posição
+	local pos = go.get_position()
+	pos = pos + self.velocity * dt
+
+	-- não permitir cair abaixo de y = 0 (por segurança)
+	if pos.y < 0 then
+		pos.y = 0
+		self.velocity.y = 0
+	end
+
+	go.set_position(pos)
+end
+
+function on_message(self, message_id, message, sender)
+	--logica de gravidade colisao com o chao do lvl
+	if message_id == hash("contact_point_response") and message.other_group == hash("level") then
+		-- se estamos colidindo vindo de cima (normal.y > 0), aterrissamos
+		if message.normal.y > 0.5 then
+			self.is_grounded  = true
+			self.velocity.y  = 0
+		end
+	end
+end
