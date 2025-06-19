@@ -9,6 +9,7 @@ local BALL_SIZE    = 10
 local player1, player2, ball, score
 score = { p1 = 0, p2 = 0 }
 
+
 function love.load()
     love.window.setMode(WINDOW_WIDTH, WINDOW_HEIGHT)
     love.graphics.setFont(love.graphics.newFont(32))
