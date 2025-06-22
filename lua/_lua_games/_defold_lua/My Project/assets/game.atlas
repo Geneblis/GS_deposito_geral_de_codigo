@@ -1,8 +1,0 @@
-animations {
-  id: "Enemy"
-  images {
-    image: "/assets/image.png"
-  }
-  playback: PLAYBACK_NONE
-}
-extrude_borders: 2

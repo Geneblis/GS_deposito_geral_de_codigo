@@ -1,8 +1,0 @@
-function init(self)
-	--"." seems to indicate root.
-	go.animate(".", "position.y", go.PLAYBACK_LOOP_FORWARD, 300, go.EASING_LINEAR, 1)
-
-	timer.delay(1.1, false, function()
-		go.delete(".")
-	end)
-end
