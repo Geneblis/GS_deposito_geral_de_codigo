@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CRUD JSON Editor</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        margin: 20px;
+      }
+      textarea {
+        width: 100%;
+        height: 100px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+      }
+      th,
+      td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        text-align: left;
+      }
+      th {
+        background: #f4f4f4;
+      }
+      input[type="text"] {
+        width: 100%;
+        box-sizing: border-box;
+      }
+      button {
+        margin: 2px;
+      }
+      #message {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Editor de JSON (CRUD)</h1>
+
+    <!-- copy e paste JSON bruto, usado mais para visualização em tempo-real. -->
+    <label for="rawJson">JSON Bruto:</label>
+    <textarea id="rawJson">{}</textarea>
+    <button id="btnLoad">📥 Carregar JSON</button>
+    <span id="message"></span>
+
+    <!-- Campo de inserção apra chave/valor -->
+    <h2>➕ Adicionar Par</h2>
+    <input type="text" id="newKey" placeholder="Chave" />
+    <input type="text" id="newValue" placeholder="Valor (string)" />
+    <button id="btnAdd">Adicionar</button>
+
+    <!-- Tabela que mostra as propriedades do objeto JSON -->
+    <h2>📋 Conteúdo do Objeto</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Chave</th>
+          <th>Valor</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody id="jsonTable"></tbody>
+    </table>
+
+    <!-- Botão para exportar de volta para textarea -->
+    <button id="btnExport">📤 Exportar para JSON</button>
+
+    <script src="scripts.js"></script>
+  </body>
+</html>
