@@ -1,139 +1,143 @@
-// 1) Seleção de elementos
-const txtYaml = document.getElementById("rawYaml");
-const btnLoad = document.getElementById("btnLoad");
-const lblMessage = document.getElementById("message");
-const tbody = document.getElementById("yamlTable");
-const inpKey = document.getElementById("newKey");
-const inpValue = document.getElementById("newValue");
-const btnAdd = document.getElementById("btnAdd");
-const btnExport = document.getElementById("btnExport");
+// 1) Seleção de elementos do DOM
+const textareaYamlBruto = document.getElementById("rawYaml");
+const botaoCarregarYaml = document.getElementById("btnLoad");
+const labelMensagemErro = document.getElementById("message");
+const corpoTabelaYaml = document.getElementById("yamlTable");
+const inputNovaChave = document.getElementById("newKey");
+const inputNovoValor = document.getElementById("newValue");
+const botaoAdicionarPar = document.getElementById("btnAdd");
+const botaoExportarYaml = document.getElementById("btnExport");
 
-// 2) Objeto em memória
-let dataObj = {};
+// 2) Objeto em memória que guarda o YAML parseado
+let objetoYamlEmMemoria = {};
 
-// 3) Carrega YAML da textarea
-btnLoad.addEventListener("click", () => {
-  lblMessage.textContent = "";
+// 3) Opções comuns para gerar o YAML com arrays inline e strings sempre entre aspas
+const yamlDumpOptions = {
+  flowLevel: 1, // Sequências a partir do nível 1 em estilo [a, b, c]
+  styles: { "!!seq": "flow" },
+  quotingType: '"', // Usa aspas duplas
+  forceQuotes: true, // Força aspas em todos os valores de string
+};
+
+// 4) Evento: carrega e parseia o YAML da textarea
+botaoCarregarYaml.addEventListener("click", () => {
+  labelMensagemErro.textContent = "";
   try {
-    const texto = txtYaml.value;
-    const parsed = jsyaml.load(texto);
-    if (typeof parsed !== "object" || Array.isArray(parsed)) {
+    const textoYaml = textareaYamlBruto.value;
+    const parsedYaml = jsyaml.load(textoYaml);
+    if (typeof parsedYaml !== "object" || Array.isArray(parsedYaml)) {
       throw new Error("YAML deve ser um mapa (chave: valor).");
     }
-    dataObj = parsed;
-    renderTable();
-  } catch (e) {
-    lblMessage.textContent = `Erro ao carregar YAML: ${e.message}`;
+    objetoYamlEmMemoria = parsedYaml;
+    atualizarTabelaYaml();
+    sincronizarTextareaComObjeto();
+  } catch (erro) {
+    labelMensagemErro.textContent = `Erro ao carregar YAML: ${erro.message}`;
   }
 });
 
-// 4) Renderiza a tabela
-function renderTable() {
-  tbody.innerHTML = "";
-  Object.entries(dataObj).forEach(([key, val]) => {
-    const tr = document.createElement("tr");
+// 5) Função que renderiza a tabela HTML a partir de objetoYamlEmMemoria
+function atualizarTabelaYaml() {
+  corpoTabelaYaml.innerHTML = "";
 
-    // coluna chave
-    const tdK = document.createElement("td");
-    tdK.textContent = key;
-    tr.appendChild(tdK);
+  Object.entries(objetoYamlEmMemoria).forEach(([chave, valor]) => {
+    const linhaTabela = document.createElement("tr");
 
-    // coluna valor
-    const tdV = document.createElement("td");
-    const inpV = document.createElement("input");
-    inpV.type = "text";
-    inpV.value = typeof val === "object" ? JSON.stringify(val) : String(val);
-    tdV.appendChild(inpV);
-    tr.appendChild(tdV);
+    // Coluna: chave
+    const celulaChave = document.createElement("td");
+    celulaChave.textContent = chave;
+    linhaTabela.appendChild(celulaChave);
 
-    // coluna ações
-    const tdA = document.createElement("td");
+    // Coluna: valor
+    const celulaValor = document.createElement("td");
+    const inputValor = document.createElement("input");
+    inputValor.type = "text";
+    inputValor.value =
+      typeof valor === "object" ? JSON.stringify(valor) : String(valor);
+    celulaValor.appendChild(inputValor);
+    linhaTabela.appendChild(celulaValor);
 
-    // botão atualizar
-    const btnU = document.createElement("button");
-    btnU.textContent = "✏️";
-    btnU.onclick = () => {
-      let raw = inpV.value.trim();
+    // Coluna: ações (atualizar / remover)
+    const celulaAcoes = document.createElement("td");
+
+    // Botão: atualizar valor
+    const botaoAtualizar = document.createElement("button");
+    botaoAtualizar.textContent = "✏️ Atualizar";
+    botaoAtualizar.onclick = () => {
+      const textoEntrada = inputValor.value.trim();
       try {
-        dataObj[key] = jsyaml.load(raw);
+        objetoYamlEmMemoria[chave] = jsyaml.load(textoEntrada);
       } catch {
-        dataObj[key] = raw;
+        objetoYamlEmMemoria[chave] = textoEntrada;
       }
-      renderTable();
-
-      // atualiza o YAML cru
-      const novoYaml = jsyaml.dump(dataObj, {
-        flowLevel: 1,
-        styles: { "!!seq": "flow" },
-      });
-      txtYaml.value = novoYaml;
+      atualizarTabelaYaml();
+      sincronizarTextareaComObjeto();
     };
-    tdA.appendChild(btnU);
+    celulaAcoes.appendChild(botaoAtualizar);
 
-    // botão remover
-    const btnD = document.createElement("button");
-    btnD.textContent = "🗑️";
-    btnD.onclick = () => {
-      delete dataObj[key];
-      renderTable();
-      // também atualizar textarea:
-      txtYaml.value = jsyaml.dump(dataObj, {
-        flowLevel: 1,
-        styles: { "!!seq": "flow" },
-      });
+    // Botão: remover par
+    const botaoRemover = document.createElement("button");
+    botaoRemover.textContent = "🗑️ Remover";
+    botaoRemover.onclick = () => {
+      delete objetoYamlEmMemoria[chave];
+      atualizarTabelaYaml();
+      sincronizarTextareaComObjeto();
     };
-    tdA.appendChild(btnD);
+    celulaAcoes.appendChild(botaoRemover);
 
-    tr.appendChild(tdA);
-    tbody.appendChild(tr);
+    linhaTabela.appendChild(celulaAcoes);
+    corpoTabelaYaml.appendChild(linhaTabela);
   });
 }
 
-// 5) Adicionar novo par
-btnAdd.addEventListener("click", () => {
-  const key = inpKey.value.trim();
-  const raw = inpValue.value.trim();
-  if (!key) {
+// 6) Evento: adicionar um novo par chave/valor
+botaoAdicionarPar.addEventListener("click", () => {
+  const novaChave = inputNovaChave.value.trim();
+  const valorBruto = inputNovoValor.value.trim();
+
+  if (!novaChave) {
     alert("Informe uma chave.");
     return;
   }
-  if (key in dataObj) {
+  if (novaChave in objetoYamlEmMemoria) {
     alert("Chave já existe.");
     return;
   }
 
   try {
-    dataObj[key] = jsyaml.load(raw);
+    objetoYamlEmMemoria[novaChave] = jsyaml.load(valorBruto);
   } catch {
-    dataObj[key] = raw;
+    objetoYamlEmMemoria[novaChave] = valorBruto;
   }
-  inpKey.value = "";
-  inpValue.value = "";
-  renderTable();
+  inputNovaChave.value = "";
+  inputNovoValor.value = "";
+  atualizarTabelaYaml();
+  sincronizarTextareaComObjeto();
 });
 
-// 6) Exportar para YAML + download
-btnExport.addEventListener("click", () => {
-  // 6.1 Atualiza textarea
-  const yamlStr = jsyaml.dump(dataObj, {
-    flowLevel: 1,
-    styles: { "!!seq": "flow" },
-  });
-  console.log(yamlStr);
-  txtYaml.value = yamlStr;
+// 7) Evento: exportar o objeto para YAML e iniciar download
+botaoExportarYaml.addEventListener("click", () => {
+  sincronizarTextareaComObjeto();
 
-  // 6.2 Gera download
-  const blob = new Blob([yamlStr], { type: "text/yaml" });
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = "data.yaml";
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(a.href);
+  const yamlString = jsyaml.dump(objetoYamlEmMemoria, yamlDumpOptions);
+  const arquivoBlob = new Blob([yamlString], { type: "text/yaml" });
+  const linkDownload = document.createElement("a");
+  linkDownload.href = URL.createObjectURL(arquivoBlob);
+  linkDownload.download = "data.yaml";
+  document.body.appendChild(linkDownload);
+  linkDownload.click();
+  document.body.removeChild(linkDownload);
+  URL.revokeObjectURL(linkDownload.href);
 
   alert("YAML exportado com sucesso!");
 });
 
-// 7) Inicialização
-renderTable(); // tabela vazia ao carregar
+// 8) Função auxiliar: atualiza a textarea com o objeto em memória
+function sincronizarTextareaComObjeto() {
+  const yamlParaTextarea = jsyaml.dump(objetoYamlEmMemoria, yamlDumpOptions);
+  textareaYamlBruto.value = yamlParaTextarea;
+}
+
+// 9) Inicialização: renderiza tabela vazia e sincroniza textarea
+atualizarTabelaYaml();
+sincronizarTextareaComObjeto();
