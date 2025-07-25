@@ -1,4 +1,2 @@
-teste: {oi: 1, dale: dale_texto fr}
-outro: [1, 2, 3, 4, 65, 99]
-outro_outro: 11111111111111110000
-sla_to_sem_ideia_agr: tem q ser um texto pra testar
+numsei: {"string aqui": 1, "seguida por outra string": 2}
+agrsei: ["texto", 1, 3, "tbétexto"]
