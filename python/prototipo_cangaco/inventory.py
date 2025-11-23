@@ -87,10 +87,14 @@ def open_inventory(player):
         player_level = player.get('level', 1)
         max_capacity = compute_max_capacity(player)
         current_load = compute_current_load(player)
-        hp = compute_hp(player)
+        hp_max = compute_hp(player)
+        hp_current = int(player.get('hp', player.get('max_hp', hp_max)))
+        coins = int(player.get('coins', 0))
 
+        # linha principal: nome, level, carga
         print(f"{player_name} ---- LVL: {player_level} --- {current_load:.1f}/{max_capacity:.1f}kg")
-        print(f"HP Máx: {hp}  |  Itens: {len(player.get('inventory', []))}\n")
+        # nova linha com HP atual e moedas
+        print(f"HP: {hp_current}/{hp_max}  |  Moedas: {coins}  |  Itens: {len(player.get('inventory', []))}\n")
 
         inv = player.get('inventory', [])
         if not inv:
