@@ -1,5 +1,4 @@
-# FILE: scenario_path.py
-# Cena: caminho até Villa-Nova — agora com emboscada automática e opção de abrir inventário.
+# scenario_path.py
 
 from ui import print_header, wait_for_enter
 from save_manager import save_player_data
@@ -9,12 +8,13 @@ from combat import start_combat
 def path_scene(player):
     while True:
         print_header()
-        print('Você parte do vilarejo em direção a Villa-Nova. O caminho é seco e o sol castiga.')
+        print('Você parte da cabana em direção a Villa-Nova. O caminho é seco e o sol castiga.\n\n')
+	print('Durante o caminho, você se depara com uma casa feita de barro, com os conhecimentos do seu tio, você sabe que a pequena casa pertence a Rodolfo, um pequeno agricultor.\n')
         print('\nOpções:')
         print('1) Seguir para Villa-Nova')
-        print('2) Parar para buscar informações na estrada')
+        print('2) Perguntar sobre o paradeiro seu Tio a Rodolfo')
         print('3) Abrir Inventário')
-        print('4) Voltar')
+        print('4) Voltar ao Menu')
         choice = input('\nEscolha: ').strip()
 
         if choice == '1':
@@ -31,32 +31,15 @@ def path_scene(player):
                 wait_for_enter()
                 return player
             else:
-                # jogador foi derrotado ou morreu; salva e retorna ao menu/cena anterior
                 save_player_data(player)
                 wait_for_enter()
                 return player
 
         elif choice == '2':
-            print('\nVocê para e conversa com moradores locais, obtendo pistas que podem ser úteis mais adiante.')
-            inventory = player.get('inventory', [])
-            # evita duplicatas checando ids já presentes
-            existing_ids = [it.get('id') if isinstance(it, dict) else str(it).lower() for it in inventory]
-            if 'moeda antiga' not in existing_ids:
-                inventory.append({
-                    'id': 'moeda antiga',
-                    'name': 'Moeda Antiga',
-                    'qty': 1,
-                    'weight': 0.05,
-                    'effects': 'Relíquia',
-                    'bonus_capacity': 0,
-                    'equipable': False,
-                    'equipped': False
-                })
-                player['inventory'] = inventory
-            player['current_scene'] = 'villanova'
-            save_player_data(player)
+            print('\nVocê para e conversa com Rodolfo e alguns dos locais, obtendo pistas que podem ser úteis mais adiante.')
+	    print('\nRodolfo da dicas de como chegar a Villa-Nova, e lhe oferece abrigo caso precise.'\n\n)
+		#funcionalidade para desbloquear continuar o caminho para Villa Nova.
             wait_for_enter()
-            return player
 
         elif choice == '3':
             open_inventory(player)
