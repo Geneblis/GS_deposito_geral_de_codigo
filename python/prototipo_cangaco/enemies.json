@@ -4,13 +4,17 @@
       "name": "Cangaceiro Solitário",
       "hp": 18,
       "atk": 4,
-      "distance": 12
+      "distance": 12,
+      "ap": 4,
+      "weapon": null
     },
     {
       "name": "Cangaceiro Jovem",
       "hp": 14,
       "atk": 3,
-      "distance": 18
+      "distance": 18,
+      "ap": 4,
+      "weapon": null
     }
   ]
 }

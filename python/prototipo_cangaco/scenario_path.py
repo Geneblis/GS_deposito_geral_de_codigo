@@ -9,7 +9,7 @@ def path_scene(player):
     while True:
         print_header()
         print('Você parte da cabana em direção a Villa-Nova. O caminho é seco e o sol castiga.\n\n')
-	print('Durante o caminho, você se depara com uma casa feita de barro, com os conhecimentos do seu tio, você sabe que a pequena casa pertence a Rodolfo, um pequeno agricultor.\n')
+        print('Durante o caminho, você se depara com uma casa feita de barro, com os conhecimentos do seu tio, você sabe que a pequena casa pertence a Rodolfo, um pequeno agricultor.\n')
         print('\nOpções:')
         print('1) Seguir para Villa-Nova')
         print('2) Perguntar sobre o paradeiro seu Tio a Rodolfo')
@@ -37,8 +37,7 @@ def path_scene(player):
 
         elif choice == '2':
             print('\nVocê para e conversa com Rodolfo e alguns dos locais, obtendo pistas que podem ser úteis mais adiante.')
-	    print('\nRodolfo da dicas de como chegar a Villa-Nova, e lhe oferece abrigo caso precise.'\n\n)
-		#funcionalidade para desbloquear continuar o caminho para Villa Nova.
+            print(f'\nRodolfo da dicas de como chegar a Villa-Nova, e lhe oferece abrigo caso precise.\n\n')
             wait_for_enter()
 
         elif choice == '3':

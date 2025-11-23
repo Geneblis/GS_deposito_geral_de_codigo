@@ -1,22 +1,17 @@
 # FILE: inventory.py
-# Sistema de inventário: carrega catálogo de items de items.json,
-# exibição, equipar/descartar, cálculo de carga e HP.
-# Salva alterações chamando save_player_data(player).
-
 import os
 import json
+import random
 
 from ui import print_header, wait_for_enter
 from save_manager import save_player_data
 
-# Arquivo JSON com catálogo de itens
 ITEMS_FILE = os.path.join(os.path.dirname(__file__), 'items.json')
 
 def _load_item_catalog():
     try:
         with open(ITEMS_FILE, 'r', encoding='utf-8') as fh:
             data = json.load(fh)
-            # garante chaves em lowercase
             return {k.lower(): v for k, v in data.items()}
     except Exception:
         return {}
@@ -29,7 +24,6 @@ def _normalize_inventory(player):
     if not inv:
         player['inventory'] = normalized
         return
-    # se inventário é lista de strings, converte usando catálogo
     if isinstance(inv[0], str):
         for name in inv:
             key = name.lower()
@@ -42,11 +36,18 @@ def _normalize_inventory(player):
                 'effects': catalog.get('effects', '') if catalog else '',
                 'bonus_capacity': int(catalog.get('bonus_capacity', 0)) if catalog else 0,
                 'equipable': bool(catalog.get('equipable', False)) if catalog else False,
-                'equipped': False
+                'equipped': False,
+                'slot': catalog.get('slot') if catalog else None,
+                'damage_min': int(catalog.get('damage_min', 0)) if catalog else 0,
+                'damage_max': int(catalog.get('damage_max', 0)) if catalog else 0,
+                'ap_cost': int(catalog.get('ap_cost', 0)) if catalog else 0,
+                'range': int(catalog.get('range', 0)) if catalog else 0,
+                'ammo_type': catalog.get('ammo_type') if catalog else None,
+                'ammo_per_shot': int(catalog.get('ammo_per_shot', 0)) if catalog else 0,
+                'armor_hp': int(catalog.get('armor_hp', 0)) if catalog else 0
             }
             normalized.append(item)
     else:
-        # assume já está normalizado (lista de dicts). garante chaves e tipos.
         for it in inv:
             item = dict(it)
             item.setdefault('id', item.get('name', '').lower())
@@ -56,6 +57,14 @@ def _normalize_inventory(player):
             item.setdefault('bonus_capacity', int(item.get('bonus_capacity', 0)))
             item.setdefault('equipable', bool(item.get('equipable', False)))
             item.setdefault('equipped', bool(item.get('equipped', False)))
+            item.setdefault('slot', item.get('slot', None))
+            item.setdefault('damage_min', int(item.get('damage_min', 0)))
+            item.setdefault('damage_max', int(item.get('damage_max', 0)))
+            item.setdefault('ap_cost', int(item.get('ap_cost', 0)))
+            item.setdefault('range', int(item.get('range', 0)))
+            item.setdefault('ammo_type', item.get('ammo_type', None))
+            item.setdefault('ammo_per_shot', int(item.get('ammo_per_shot', 0)))
+            item.setdefault('armor_hp', int(item.get('armor_hp', 0)))
             normalized.append(item)
     player['inventory'] = normalized
     save_player_data(player)
@@ -75,9 +84,41 @@ def compute_current_load(player):
         total += float(it.get('weight', 0.0)) * int(it.get('qty', 1))
     return total
 
-def compute_hp(player):
+def compute_hp_max(player):
     presence = int(player.get('stats', {}).get('Presença', 1))
-    return 20 + 5 * presence
+    return 20 + 5 * presence + sum(int(it.get('armor_hp', 0)) for it in player.get('inventory', []) if it.get('equipped') and it.get('slot') == 'armor')
+
+def get_equipped_weapon(player):
+    for it in player.get('inventory', []):
+        if it.get('equipped') and it.get('slot') == 'weapon':
+            return it
+    return None
+
+def get_equipped_armor(player):
+    for it in player.get('inventory', []):
+        if it.get('equipped') and it.get('slot') == 'armor':
+            return it
+    return None
+
+def compute_player_damage_range(player):
+    weapon = get_equipped_weapon(player)
+    if not weapon:
+        return (6, 12)  # unarmed
+    dm = int(weapon.get('damage_min', 0))
+    dM = int(weapon.get('damage_max', 0))
+    if dm <= 0 and dM <= 0:
+        # fallback sample damage
+        return (5, 10)
+    return (dm, dM)
+
+def find_ammo_count(player, ammo_type):
+    if not ammo_type:
+        return 0
+    total = 0
+    for it in player.get('inventory', []):
+        if it.get('id') == ammo_type:
+            total += int(it.get('qty', 1))
+    return total
 
 def open_inventory(player):
     _normalize_inventory(player)
@@ -87,14 +128,30 @@ def open_inventory(player):
         player_level = player.get('level', 1)
         max_capacity = compute_max_capacity(player)
         current_load = compute_current_load(player)
-        hp_max = compute_hp(player)
+        hp_max = compute_hp_max(player)
         hp_current = int(player.get('hp', player.get('max_hp', hp_max)))
+        ap_max = int(player.get('action_points', 8))
+        ap_current = int(player.get('current_ap', ap_max))
         coins = int(player.get('coins', 0))
+        dmg_min, dmg_max = compute_player_damage_range(player)
+        weapon = get_equipped_weapon(player)
+        armor = get_equipped_armor(player)
 
-        # linha principal: nome, level, carga
         print(f"{player_name} ---- LVL: {player_level} --- {current_load:.1f}/{max_capacity:.1f}kg")
-        # nova linha com HP atual e moedas
-        print(f"HP: {hp_current}/{hp_max}  |  Moedas: {coins}  |  Itens: {len(player.get('inventory', []))}\n")
+        print(f"HP: {hp_current}/{hp_max}  ---  AP: {ap_current}/{ap_max}  ---  DANO: [{dmg_min} - {dmg_max}]")
+        if weapon:
+            ammo_count = find_ammo_count(player, weapon.get('ammo_type'))
+            ammo_info = f" (Ammo: {ammo_count})" if weapon.get('ammo_type') else ""
+            print(f"\nArma Equipada: {weapon.get('name')}{ammo_info} [{weapon.get('damage_min')} - {weapon.get('damage_max')}] [Alcance: {weapon.get('range')}m] [Peso: {weapon.get('weight')}kg]")
+        else:
+            print("\nArma Equipada: Socos (6-12 dano) [Alcance: 12m]")
+
+        if armor:
+            print(f"Armadura Equipada: {armor.get('name')} [+{armor.get('armor_hp',0)} HP]")
+        else:
+            print("Armadura Equipada: Nenhuma")
+
+        print(f"\nMoedas: {coins}    Itens: {len(player.get('inventory', []))}\n")
 
         inv = player.get('inventory', [])
         if not inv:
@@ -108,10 +165,19 @@ def open_inventory(player):
             weight = float(it.get('weight', 0.0))
             effects = it.get('effects', '')
             name = it.get('name', '')
+            slot = it.get('slot')
+            extra = ""
+            if slot == 'weapon':
+                extra = f" [W:{it.get('damage_min')}-{it.get('damage_max')} R:{it.get('range')}m AP:{it.get('ap_cost')}]"
+                if it.get('ammo_type'):
+                    ammo_count = find_ammo_count(player, it.get('ammo_type'))
+                    extra += f" (Ammo:{ammo_count})"
+            if slot == 'armor':
+                extra = f" [ArmorHP:+{it.get('armor_hp',0)}]"
             if it.get('equipped'):
-                print(f"{line_prefix}[{name}] {{{effects}}} ---- ({qty})({weight}kg)")
+                print(f"{line_prefix}[{name}]{extra} {{{effects}}} ---- ({qty})({weight}kg)")
             else:
-                print(f"{line_prefix}{name} --- ({qty})({weight}kg)")
+                print(f"{line_prefix}{name}{extra} --- ({qty})({weight}kg)")
 
         print("\n0) Voltar")
         choice = input("\nSelecione um item pelo número para ação (ou 0 para voltar): ").strip()
@@ -132,7 +198,6 @@ def open_inventory(player):
             continue
 
         selected = inv[num - 1]
-        # prompt actions
         while True:
             print_header()
             print(f'Selecionado {selected.get("name")}, o que deseja fazer?')
@@ -147,7 +212,8 @@ def open_inventory(player):
                     print("\nEste item não pode ser equipado.")
                     wait_for_enter()
                     continue
-                # alterna equip
+                # se for weapon ou armor, garantir apenas um por slot
+                slot = selected.get('slot')
                 if selected.get('equipped'):
                     selected['equipped'] = False
                     print(f"\n{selected.get('name')} foi desequipado.")
@@ -155,6 +221,10 @@ def open_inventory(player):
                     wait_for_enter()
                     break
                 else:
+                    if slot:
+                        for it in inv:
+                            if it.get('equipped') and it.get('slot') == slot:
+                                it['equipped'] = False
                     selected['equipped'] = True
                     print(f"\n{selected.get('name')} foi equipado.")
                     save_player_data(player)

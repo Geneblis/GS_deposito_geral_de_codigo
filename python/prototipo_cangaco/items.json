@@ -4,48 +4,89 @@
     "weight": 1,
     "effects": "+5kg de Espaço",
     "bonus_capacity": 5,
-    "equipable": true
-  },
-  "bolsa de couro": {
-    "display": "Bolsa de Couro",
-    "weight": 1,
-    "effects": "+5kg de Espaço",
-    "bonus_capacity": 5,
-    "equipable": true
+    "equipable": true,
+    "slot": "arm",
+    "damage_min": 0,
+    "damage_max": 0,
+    "ap_cost": 0,
+    "range": 0,
+    "ammo_type": null,
+    "ammo_per_shot": 0,
+    "armor_hp": 0
   },
   "botas de couro": {
     "display": "Botas de Couro",
     "weight": 2,
     "effects": "+10kg de Espaço",
     "bonus_capacity": 10,
-    "equipable": true
+    "equipable": true,
+    "slot": "armor",
+    "damage_min": 0,
+    "damage_max": 0,
+    "ap_cost": 0,
+    "range": 0,
+    "ammo_type": null,
+    "ammo_per_shot": 0,
+    "armor_hp": 1
   },
   "espingarda": {
-    "display": "Espingarda",
+    "display": "Espingarda Velha",
     "weight": 6,
-    "effects": "+30 de Dano A Distância",
+    "effects": "Arma de fogo antiga",
     "bonus_capacity": 0,
-    "equipable": true
+    "equipable": true,
+    "slot": "weapon",
+    "damage_min": 6,
+    "damage_max": 12,
+    "ap_cost": 8,
+    "range": 12,
+    "ammo_type": "cartuchos",
+    "ammo_per_shot": 1,
+    "armor_hp": 0
   },
   "cartuchos": {
     "display": "Cartuchos",
     "weight": 0.2,
     "effects": "Munição",
     "bonus_capacity": 0,
-    "equipable": false
+    "equipable": false,
+    "slot": null,
+    "damage_min": 0,
+    "damage_max": 0,
+    "ap_cost": 0,
+    "range": 0,
+    "ammo_type": null,
+    "ammo_per_shot": 0,
+    "armor_hp": 0
   },
   "comida crua": {
     "display": "Comida Crua",
     "weight": 1,
     "effects": "+5 de HP (uso)",
     "bonus_capacity": 0,
-    "equipable": false
+    "equipable": false,
+    "slot": null,
+    "damage_min": 0,
+    "damage_max": 0,
+    "ap_cost": 0,
+    "range": 0,
+    "ammo_type": null,
+    "ammo_per_shot": 0,
+    "armor_hp": 0
   },
   "moeda antiga": {
     "display": "Moeda Antiga",
     "weight": 0.05,
     "effects": "Relíquia",
     "bonus_capacity": 0,
-    "equipable": false
+    "equipable": false,
+    "slot": null,
+    "damage_min": 0,
+    "damage_max": 0,
+    "ap_cost": 0,
+    "range": 0,
+    "ammo_type": null,
+    "ammo_per_shot": 0,
+    "armor_hp": 0
   }
 }
