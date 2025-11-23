@@ -1,0 +1,51 @@
+{
+  "bolsa pequena": {
+    "display": "Bolsa de Couro",
+    "weight": 1,
+    "effects": "+5kg de Espaço",
+    "bonus_capacity": 5,
+    "equipable": true
+  },
+  "bolsa de couro": {
+    "display": "Bolsa de Couro",
+    "weight": 1,
+    "effects": "+5kg de Espaço",
+    "bonus_capacity": 5,
+    "equipable": true
+  },
+  "botas de couro": {
+    "display": "Botas de Couro",
+    "weight": 2,
+    "effects": "+10kg de Espaço",
+    "bonus_capacity": 10,
+    "equipable": true
+  },
+  "espingarda": {
+    "display": "Espingarda",
+    "weight": 6,
+    "effects": "+30 de Dano A Distância",
+    "bonus_capacity": 0,
+    "equipable": true
+  },
+  "cartuchos": {
+    "display": "Cartuchos",
+    "weight": 0.2,
+    "effects": "Munição",
+    "bonus_capacity": 0,
+    "equipable": false
+  },
+  "comida crua": {
+    "display": "Comida Crua",
+    "weight": 1,
+    "effects": "+5 de HP (uso)",
+    "bonus_capacity": 0,
+    "equipable": false
+  },
+  "moeda antiga": {
+    "display": "Moeda Antiga",
+    "weight": 0.05,
+    "effects": "Relíquia",
+    "bonus_capacity": 0,
+    "equipable": false
+  }
+}
