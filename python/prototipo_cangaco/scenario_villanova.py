@@ -16,7 +16,9 @@ def villanova_scene(player):
         print('4) Voltar')
         choice = input('\nEscolha: ').strip()
         if choice == '1':
-            print('\nVocê começa a investigar. (esta cena é um esqueleto — expanda conforme desejar)')
+            print('\nVocê começa a investigar....')
+            print("\n\n\n")
+            print("Esse é o final do prototipo, ate aqui voce viu um basico da narrativa, gerenciamento de inventario e uma ideia muito basica do combate final.")
             player['current_scene'] = 'villanova_exploring'
             save_player_data(player)
             wait_for_enter()
