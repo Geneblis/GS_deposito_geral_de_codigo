@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Branching Dialogue Editor</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Branching Dialogue Editor</h1>
+      <div class="controls">
+        <button id="addNodeBtn">Adicionar Nó</button>
+        <button id="exportBtn">Exportar JSON</button>
+        <input id="importInput" type="file" accept="application/json" />
+        <button id="playBtn">Testar Diálogo (Play)</button>
+        <button id="clearBtn">Limpar</button>
+      </div>
+    </header>
+
+    <main>
+      <div id="canvasWrap">
+        <svg id="connections"></svg>
+        <div id="canvas"></div>
+      </div>
+
+      <aside id="editorPane">
+        <h2>Editor</h2>
+        <div id="nodeForm">
+          <label>ID: <input id="nodeId" readonly /></label>
+          <label>Texto:<textarea id="nodeText"></textarea></label>
+          <div class="choicesSection">
+            <h3>Escolhas</h3>
+            <ul id="choicesList"></ul>
+            <div class="choiceControls">
+              <input id="newChoiceText" placeholder="Texto da escolha" />
+              <button id="addChoiceBtn">
+                Adicionar escolha (cria nó alvo)
+              </button>
+            </div>
+          </div>
+          <div class="formActions">
+            <button id="saveNodeBtn">Salvar Nó</button>
+            <button id="deleteNodeBtn">Excluir Nó</button>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <div id="playModal" class="modal hidden">
+      <div class="modalContent">
+        <h3>Preview de Diálogo</h3>
+        <div id="playArea"></div>
+        <div class="playControls">
+          <button id="closePlayBtn">Fechar</button>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <small
+        >Salvamento automático no localStorage. Use export para baixar
+        JSON.</small
+      >
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>

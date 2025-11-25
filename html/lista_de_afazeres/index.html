@@ -1,24 +1,117 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Afazeres</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
-    <link rel="stylesheet" href="./styles.css">
-</head>
-<body>
-    <header>
-        <h2>Lista de Afazeres:</h2>
-        <br>
-        <input type="text" id="afazeres" placeholder="Eu vou...">
-        <span onclick="adicionarNovoElemento()" class="addButton">Adicionar</span>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Planner & To-do</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="brand">
+        <h1>Planner & To-Do</h1>
+        <p>Lista de tarefas e caderno pessoal</p>
+      </div>
+      <nav class="top-nav">
+        <button data-tab="todos" class="tab-btn active">To-Do</button>
+        <button data-tab="notebook" class="tab-btn">Notebook</button>
+        <button data-tab="settings" class="tab-btn">Settings</button>
+      </nav>
     </header>
-    <main>
-        <ul id="meusAfazeres">
-            <li class="checked">Usar a lista de afazeres</li>
-        </ul>
+
+    <main class="container">
+      <section id="tab-todos" class="tab-panel active">
+        <div class="panel-head">
+          <h2>Minhas Tarefas</h2>
+          <div class="actions">
+            <button id="openAddTodo">Adicionar tarefa</button>
+            <button id="clearRemoved">Limpar removidos</button>
+          </div>
+        </div>
+
+        <div class="todo-list" id="todoList"></div>
+      </section>
+
+      <section id="tab-notebook" class="tab-panel">
+        <div class="panel-head">
+          <h2>Notebook / Agenda</h2>
+          <div class="actions">
+            <input id="noteDate" type="date" />
+            <button id="openAddNote">Adicionar nota</button>
+          </div>
+        </div>
+
+        <div class="note-list" id="noteList"></div>
+      </section>
+
+      <section id="tab-settings" class="tab-panel">
+        <div class="panel-head">
+          <h2>Configurações</h2>
+        </div>
+        <div class="settings-content">
+          <label
+            >Salvar automaticamente:
+            <input id="autosaveToggle" type="checkbox" checked
+          /></label>
+          <p class="muted">
+            Os dados são salvos no <strong>localStorage</strong> do navegador.
+          </p>
+        </div>
+      </section>
     </main>
-    <script defer src="./scripts.js"></script>
-</body>
+
+    <div id="modalTodo" class="modal hidden">
+      <div class="modal-card">
+        <h3 id="modalTodoTitle">Adicionar tarefa</h3>
+        <label
+          >Título
+          <input id="todoTitle" type="text" />
+        </label>
+        <label
+          >Descrição
+          <textarea id="todoDescription" rows="4"></textarea>
+        </label>
+        <div class="checklist-editor">
+          <h4>Checklist</h4>
+          <ul id="checklistItems"></ul>
+          <div class="checklist-controls">
+            <input
+              id="newChecklistText"
+              type="text"
+              placeholder="Item da checklist"
+            />
+            <button id="addChecklistItem">Adicionar item</button>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button id="saveTodo">Salvar</button>
+          <button id="cancelTodo">Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="modalNote" class="modal hidden">
+      <div class="modal-card">
+        <h3 id="modalNoteTitle">Nova nota</h3>
+        <label
+          >Data
+          <input id="noteFormDate" type="date" />
+        </label>
+        <label
+          >Título
+          <input id="noteTitle" type="text" />
+        </label>
+        <label
+          >Conteúdo
+          <textarea id="noteContent" rows="6"></textarea>
+        </label>
+        <div class="modal-actions">
+          <button id="saveNote">Salvar</button>
+          <button id="cancelNote">Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="app.js" defer></script>
+  </body>
 </html>
